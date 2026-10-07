@@ -3,6 +3,7 @@ import 'dotenv/config'
 import cors from 'cors'
 import pool from "./db/database.js";
 import { runMigrations } from "../scripts/migrate.js";
+import { loadGames } from "../scripts/load-games.js";
 
 
 const app: Express = express()
@@ -15,19 +16,8 @@ app.get('/', (req, res) => {
     res.json('csac')
 })
 
-// async function connectDB() {
-//     try {
-//         await pool.query('SELECT NOW() as current_time')
-//         console.log('db conencted')
-//     } catch (error) {
-//         console.log('error', error)
-//         process.exit(1)
-//     }
-// }
-
-// await connectDB()
-
 await runMigrations()
+// await loadGames()
 
 app.listen(port, () => {
     console.log('server is running')
