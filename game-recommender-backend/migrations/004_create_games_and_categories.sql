@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS games(
     id SERIAL PRIMARY KEY,
     rawg_id INT UNIQUE NOT NULL,
     title TEXT,
-    description TEXT,
+    game_description TEXT,
     release_date DATE,
     rating FLOAT,
     background_image TEXT,
