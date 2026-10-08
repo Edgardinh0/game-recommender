@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
 })
 
 await runMigrations()
-// await loadGames()
+
 
 app.listen(port, () => {
     console.log('server is running')

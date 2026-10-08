@@ -53,7 +53,7 @@ export async function runMigrations() {
     const migrationsDir = path.join(import.meta.dirname, '..', 'migrations')
     
     try {
-        const allFiles: string[] = await getMigrationFiles(migrationsDir)
+        const allFiles: string[] = getMigrationFiles(migrationsDir)
         const appliedFiles: string[] = await getAppliedMigrations()
         const unappliedFiles: string[] = allFiles.filter(file => !appliedFiles.includes(file))
         await applyMigration(unappliedFiles, migrationsDir)
