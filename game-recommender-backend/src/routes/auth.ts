@@ -3,6 +3,7 @@ import pool from '../db/database.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import 'dotenv/config'
+import { checkJwt } from '../middleware/jwtcheck.js'
 
 const router = express.Router()
 
@@ -76,6 +77,13 @@ router.post('/api/auth/login', async(req, res) => {
     } catch(error: any) {
         res.status(500).json({error: 'internal server error'})
     }
+})
+
+router.get('/api/auth/me', checkJwt, (req, res) => {
+    res.json({
+        message: 'You are authenticated',
+        userId: (req as any).userId
+    })
 })
 
 export default router

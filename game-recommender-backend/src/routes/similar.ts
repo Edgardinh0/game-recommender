@@ -3,7 +3,7 @@ import pool from '../db/database.js'
 
 const router = express.Router()
 
-router.get('/api/games/:id/similar', async (req, res) => {
+router.get('/api/games/:id/similar',  async (req, res) => {
     try {
         const id = parseInt(req.params.id, 10)
         if (isNaN(id)) {
@@ -22,6 +22,10 @@ router.get('/api/games/:id/similar', async (req, res) => {
         if (!gameCheck.rows[0].embedding) {
             return res.status(400).json({ error: 'У игры нет эмбеддинга' })
         }
+
+        const likeCheck = await pool.query(
+            `SELECT COUNT(*) FROM interactions WHERE user_id = $1 and action_type = 'like'`, [userId]
+        )
 
         const selectQuery = `
             SELECT id, title, background_image, rating,
