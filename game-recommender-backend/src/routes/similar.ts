@@ -23,10 +23,6 @@ router.get('/api/games/:id/similar',  async (req, res) => {
             return res.status(400).json({ error: 'У игры нет эмбеддинга' })
         }
 
-        const likeCheck = await pool.query(
-            `SELECT COUNT(*) FROM interactions WHERE user_id = $1 and action_type = 'like'`, [userId]
-        )
-
         const selectQuery = `
             SELECT id, title, background_image, rating,
                    ROUND((embedding <=> (SELECT embedding FROM games WHERE id = $1))::numeric, 4) as distance

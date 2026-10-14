@@ -5,16 +5,18 @@ import { runMigrations } from "../scripts/migrate.js";
 import similarRoutes from '../src/routes/similar.js'
 import authRoutes from '../src/routes/auth.js'
 import interactionRoutes from '../src/routes/interact.js'
+import usersRouter from '../src/routes/users.js'
 
 
 const app: Express = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3000   
 
 app.use(cors())
 app.use(express.json())
 app.use(similarRoutes)
 app.use(authRoutes)
 app.use(interactionRoutes)
+app.use(usersRouter)
 
 app.get('/', (req, res) => {
     res.json('csac')
