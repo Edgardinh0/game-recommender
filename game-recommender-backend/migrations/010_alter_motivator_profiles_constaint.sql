@@ -1,0 +1,1 @@
+ALTER TABLE motivator_profiles ADD CONSTRAINT motivator_profiles_motivator_name_unique UNIQUE (motivator_name)

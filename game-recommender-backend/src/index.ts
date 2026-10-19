@@ -6,6 +6,8 @@ import similarRoutes from '../src/routes/similar.js'
 import authRoutes from '../src/routes/auth.js'
 import interactionRoutes from '../src/routes/interact.js'
 import usersRouter from '../src/routes/users.js'
+import { addQuestions } from "../scripts/readQuestions.js";
+import { generateMPEmbeddings } from "../scripts/seedMotivatorProfiles.js";
 
 
 const app: Express = express()
@@ -23,6 +25,8 @@ app.get('/', (req, res) => {
 })
 
 await runMigrations()
+await addQuestions()
+await generateMPEmbeddings()
 
 
 app.listen(port, () => {
