@@ -2,11 +2,11 @@ import express, { Express, Request, Response } from "express";
 import 'dotenv/config'
 import cors from 'cors'
 import { runMigrations } from "../scripts/migrate.js";
-import similarRoutes from '../src/routes/similar.js'
-import authRoutes from '../src/routes/auth.js'
-import interactionRoutes from '../src/routes/interact.js'
-import usersRouter from '../src/routes/users.js'
-import questionsRouter from '../src/routes/questions.js'
+import similarRoutes from './routes/similar.js'
+import authRoutes from './routes/auth.js'
+import interactionRoutes from './routes/interact.js'
+import usersRouter from './routes/users.js'
+import questionsRouter from './routes/questions.js'
 
 
 
