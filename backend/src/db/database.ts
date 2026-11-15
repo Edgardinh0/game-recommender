@@ -1,4 +1,4 @@
-import { Pool } from "../../node_modules/@types/pg/index.js";
+import { Pool } from "pg";
 
 const pool = new Pool({
     host: process.env.DB_HOST,

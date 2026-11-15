@@ -1,11 +1,13 @@
-import Form from '../components/ui/form'
+import RegisterPage from './pages/RegisterPage'
+import LoginPage from './pages/LoginPage'
 import './App.css'
 
 function App() {
 
   return (
     <>
-      <Form />
+      <RegisterPage />
+      {/* <LoginPage /> */}
     </>
   )
 }
