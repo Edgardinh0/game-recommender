@@ -1,4 +1,6 @@
-import { createRootRoute, Outlet } from '@tanstack/react-router'
+import { createRootRoute, Outlet, redirect } from '@tanstack/react-router'
+import { useAuthStore } from '../stores/AuthStore'
+import PageNotFound from '../components/ui/PageNotFound'
 
 const RootLayout = () => (
   <>
@@ -6,4 +8,15 @@ const RootLayout = () => (
   </>
 )
 
-export const Route = createRootRoute({ component: RootLayout })
+export const Route = createRootRoute({ 
+  beforeLoad: ({location}) => {
+    const token = useAuthStore.getState().token
+
+    const isPublicRoute = location.pathname === '/login' || location.pathname === '/register'
+
+    if (!isPublicRoute && !token) {
+      throw redirect({to: '/login'})
+    }
+  },
+  component: RootLayout,
+  notFoundComponent: PageNotFound})
