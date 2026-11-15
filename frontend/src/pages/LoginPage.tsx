@@ -64,18 +64,18 @@ export default function LoginPage() {
 
     return (
         <div className='flex flex-col items-center justify-center min-h-screen'>
-            <form className='gap-2 flex flex-col ' onSubmit={handleSubmit(onSubmit)}>
-                <input {...register('username')} type='text' placeholder='username'></input>
+            <form className='gap-5 flex flex-col w-1/2 md:w-1/3 mb-3 border p-4' onSubmit={handleSubmit(onSubmit)}>
+                <input {...register('username')} type='text' placeholder='username' className='placeholder-zinc-400 border rounded-md p-2'></input>
                 {errors.username && <div className='text-red-600'>{errors.username.message}</div>}
-                <input {...register('password')} type='password' placeholder='password'></input>
+                <input {...register('password')} type='password' placeholder='password' className='placeholder-zinc-400 border rounded-md p-2'></input>
                 {errors.password && <div className='text-red-600'>{errors.password.message}</div>}
-                <button type='submit' className='cursor-pointer w-fit'>Login</button>
+                <button type='submit' className='cursor-pointer w-fit self-center text-zinc-100 border rounded-md p-2'>Login</button>
                 {serverError && <div className='text-red-600'>Internal server error</div>}
             </form>
-            <div className='flex flex-col'>
+            <div className='flex flex-col items-center gap-3'>
                 <span>Not registered yet?</span>
                 <Link to='/register'>
-                    <button className='cursor-pointer'>Register</button>
+                    <button className='cursor-pointer w-fit self-center text-zinc-100 border rounded-md p-2'>Register</button>
                 </Link>
             </div>
         </div>

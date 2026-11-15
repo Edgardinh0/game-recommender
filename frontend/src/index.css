@@ -3,7 +3,7 @@
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/inter";
 
-@custom-variant dark (&:is(.dark *));
+/* @custom-variant dark (&:is(.dark *));
 :root {
   --text: #6b6375;
   --text-h: #08060d;
@@ -259,4 +259,4 @@ code {
   body {
     @apply bg-background text-foreground;}
   html {
-    @apply font-sans;}}
+    @apply font-sans;}} */

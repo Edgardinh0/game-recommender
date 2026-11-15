@@ -3,9 +3,9 @@ import { useAuthStore } from '../stores/AuthStore'
 import PageNotFound from '../components/ui/PageNotFound'
 
 const RootLayout = () => (
-  <>
+  <div className='bg-zinc-950 text-zinc-100'>
     <Outlet />
-  </>
+  </div>
 )
 
 export const Route = createRootRoute({ 
