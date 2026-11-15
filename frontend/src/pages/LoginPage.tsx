@@ -6,6 +6,8 @@ import { useState } from 'react'
 import api from '../api/client'
 import { AxiosError } from 'axios'
 import { Link } from '@tanstack/react-router'
+import { useNavigate } from '@tanstack/react-router'
+import { useAuthStore } from '../stores/AuthStore'
 
 const LoginUserSchema = z.object({
     username: z.string()
@@ -22,18 +24,29 @@ export default function LoginPage() {
         resolver: zodResolver(LoginUserSchema)
     })
 
+    const navigate = useNavigate({from: '/login'})
+
+    const updateToken = useAuthStore((token) => token.updateToken)
+
     const [serverError, setServerError] = useState(false)
 
     async function loginUser(data: {username: string, password: string}) {
-        const response = await api.post('/api/auth/login', data)
-        console.log(response) 
+        const result = await api.post('/api/auth/login', data)
+        return result.data.token
     }
 
     const mutation = useMutation({
         mutationFn: loginUser,
-        onError: (error: AxiosError<{ message?: string }>) => {
+        onSuccess: (data) => {
+            updateToken(data)
+            navigate({
+                to: '/'
+            })
+        },
+        onError: (error: AxiosError<{ error?: string }>) => {
             if (error.response) {
-                const serverMessage = error.response.data.message || 'Authorization Error'
+                console.log(error.response.data.error)
+                const serverMessage = error.response.data.error || 'Authorization Error'
                 setError('username', {type: 'custom', message: serverMessage})
             } else if (error.request) {
                 setServerError(true)

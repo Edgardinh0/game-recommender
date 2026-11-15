@@ -5,6 +5,8 @@ import { useMutation } from '@tanstack/react-query'
 import api from '../../src/api/client'
 import { useState } from 'react'
 import { Link } from '@tanstack/react-router'
+import type { AxiosError } from 'axios'
+import { useNavigate } from '@tanstack/react-router'
 
 const RegisterUserSchema = z.object({
         username: z.string()
@@ -27,24 +29,35 @@ type RegisterUserSchemaType = z.infer<typeof RegisterUserSchema>
 export default function RegisterPage() {
     const [serverError, setServerError] = useState(false)
     
+    const navigate = useNavigate({from: '/register'})
+
     const { register, handleSubmit, formState, setError } = useForm<RegisterUserSchemaType>({
         resolver: zodResolver(RegisterUserSchema)
     })
 
     const mutation = useMutation({
-        mutationFn: registerUser
-    })
-        
-    async function registerUser(data: {username: string, password: string}) {
-        try {
-            await api.post('/api/auth/register', data)
-        } catch (error: any) {
+        mutationFn: registerUser,
+        onSuccess: () => {
+            navigate({
+                to: '/login'
+            })
+        },
+        onError: (error: AxiosError<{error?: string}>) => {
             if (error.response) {
-                setError('username', {type: 'custom', message: error.response.message})
-            } else if (error.request){
+                console.log(error.response.data.error)
+                const serverMessage = error.response.data.error || 'Registration Error'
+                setError('username', {type: 'custom', message: serverMessage})
+            } else if (error.request) {
+                setServerError(true)
+            } else {
+                console.error('Request Error')
                 setServerError(true)
             }
         }
+    })
+        
+    async function registerUser(data: {username: string, password: string}) {
+        await api.post('/api/auth/register', data)
     }
 
     const onSubmit: SubmitHandler<RegisterUserSchemaType> = (data) => {
